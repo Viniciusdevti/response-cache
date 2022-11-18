@@ -25,21 +25,21 @@ app.UseResponseCaching();
 app.Run();
 O service é bem simples, temos um GetRandomNumber que retorna retorna um número aleatório depois de 2 segundos.
 
-namespace ResponseCache.Service
-{
-    public class NumberService : INumberService
+    namespace ResponseCache.Service
     {
-        public int GetRandomNumber()
+        public class NumberService : INumberService
         {
-            TimeSpan interval = new TimeSpan(0, 0, 2);
-            Thread.Sleep(interval);
-            Random rnd = new Random();
-            int number = rnd.Next();
+            public int GetRandomNumber()
+            {
+                TimeSpan interval = new TimeSpan(0, 0, 2);
+                Thread.Sleep(interval);
+                Random rnd = new Random();
+                int number = rnd.Next();
 
-            return number;
+                return number;
+            }
         }
     }
-}
 No controller, temos a injeção para o service, que com o .net 7, não será necessário adicionar o [FromServices]. Foram criados 3 endpoints que nos mostrarão como podemos melhorar nosso desempenho com o responseCache.
 
 using Microsoft.AspNetCore.Mvc;
